@@ -183,23 +183,24 @@ public class Cell {
      * Determine if the other cell is an immediate
      * neighbour of the current cell.
      * @return true iff the other cell is immediately adjacent.
+     * @param otherCell the other cell to check against.
      */
      public boolean adjacent(Cell otherCell) {
     	 boolean adjacent = false;
-    	 if(this.getBoard() == otherCell.getBoard())
-    	 {
-	    	 if(this.getX() == otherCell.getX()) {
-	    		 adjacent = otherCell.getY() == this.getY() - 1 || otherCell.getY() == this.getY() +1; 
+    	 if (this.getBoard() == otherCell.getBoard()) {
+	    	 if (this.getX() == otherCell.getX()) {
+	    		 adjacent = otherCell.getY() == this.getY() - 1 || otherCell.getY() == this.getY() + 1; 
 	    	 }
-	    	 else if(this.getY() == otherCell.getY()) {
-	    		 adjacent = otherCell.getX() == this.getX() - 1 || otherCell.getX() == this.getX() +1; 
+	    	 else if (this.getY() == otherCell.getY()) {
+	    		 adjacent = otherCell.getX() == this.getX() - 1 || otherCell.getX() == this.getX() + 1; 
 	    	 }
     	 }
     	 return adjacent;
      }
     
     /**
-     * @return [x,y]@<guest code> string representation.
+     * @return [x,y]
+     * @<guest code> string representation.
      */
     @Override
     public String toString() {
