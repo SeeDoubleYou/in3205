@@ -48,6 +48,9 @@
     
   <!-- the JUnit binaries -->
   <property name="junitjar" location="${lib.dir}/junit-4.8.1.jar"/> 
+	
+  <!-- checkstyle library -->
+  <property name="checkstylejar" location="${lib.dir}/checkstyle-all-5.0.jar"/>
    
   <!-- name for the jar containing the binary distribution --> 
   <property name="jpacmanjar" location="${dist}/jpacman-${version}.jar"/>
@@ -295,6 +298,7 @@
     <delete dir="${dist}/jpacman-${version}"/>
   </target>
 
+	
 	<!-- 
 	Create javadoc documentation
 	============================
@@ -315,4 +319,17 @@
 		</javadoc>
 	</target>
 
+	
+	<!-- 
+	Use checkstyle to check all source files
+	========================================
+	-->	
+	<taskdef resource="checkstyletask.properties" classpath="${checkstylejar}"/>
+	<target name="checkstyle" description="Check all source files for code convention violations">
+		<checkstyle config="checkstyle.xml">
+			<fileset dir="src/main/java" includes="**/*.java"/>
+			<formatter type="plain"/>		
+	    </checkstyle>
+	</target>
+	
 </project>
