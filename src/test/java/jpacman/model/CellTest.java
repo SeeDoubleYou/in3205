@@ -1,6 +1,7 @@
 package jpacman.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -76,6 +77,10 @@ public class CellTest {
     	//test right adjacency
     	cellB = aBoard.getCell(3, 2);
     	assertTrue(cellA.adjacent(cellB));
+    	
+    	//test if a cell is NOT adjacent
+    	cellB = aBoard.getCell(3, 1);
+    	assertFalse(cellA.adjacent(cellB));
     }
      
 }
