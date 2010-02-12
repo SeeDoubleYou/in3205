@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <projectDescription>
 	<name>jpacman</name>
 	<comment></comment>
@@ -8,11 +7,6 @@
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>com.atlassw.tools.eclipse.checkstyle.CheckstyleBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -28,7 +22,6 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.atlassw.tools.eclipse.checkstyle.CheckstyleNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.devzuz.q.maven.jdt.core.mavenNature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
