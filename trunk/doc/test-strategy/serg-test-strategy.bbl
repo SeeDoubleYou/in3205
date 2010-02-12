@@ -1,0 +1,28 @@
+\begin{thebibliography}{}
+
+\bibitem[Beck, 2003]{Beck:2003}
+Beck, K. (2003).
+\newblock {\em Test-Driven Development by Example}.
+\newblock Addison-Wesley.
+
+\bibitem[Binder, 2000]{Binder:2000}
+Binder, R. (2000).
+\newblock {\em Testing Object-Oriented Systems: Models, Patterns, and Tools.}
+\newblock Addison-Wesley.
+
+\bibitem[Marick, 1995]{Marick:1995}
+Marick, B. (1995).
+\newblock {\em The Craft of Software Testing}.
+\newblock Prentice Hall, New Jersey.
+
+\bibitem[Meyer, 1992]{Meyer:1992}
+Meyer, B. (1992).
+\newblock Applying ``design by contract''.
+\newblock {\em Computer}, 25(10):40--51.
+
+\bibitem[Pezz\`{e} and Young, 2008]{Pezze:2008}
+Pezz\`{e}, M. and Young, M. (2008).
+\newblock {\em Software Testing and Analysis}.
+\newblock Wiley.
+
+\end{thebibliography}
