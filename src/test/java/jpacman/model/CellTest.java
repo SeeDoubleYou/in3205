@@ -25,6 +25,7 @@ public class CellTest {
      * The board the cells occur on.
      */
     private Board aBoard;
+    private Board differentBoard;
 
     /**
      * The "Cell Under Test".
@@ -38,6 +39,7 @@ public class CellTest {
     @Before
     public void setUpBoard() {
         aBoard = new Board(width, height);
+        differentBoard = new Board(width, height);
         // put the cell on a "risky" invariant boundary value.
         boundaryCell = aBoard.getCell(0, height - 1);
         centerCell = aBoard.getCell(1, 1);
@@ -84,6 +86,10 @@ public class CellTest {
     	
     	//test if a cell is NOT adjacent
     	cellB = aBoard.getCell(3, 1);
+    	assertFalse(cellA.adjacent(cellB));
+    	
+    	//test if a cell on another board is NOT adjacent
+    	cellB = differentBoard.getCell(2, 3);
     	assertFalse(cellA.adjacent(cellB));
     }
      
