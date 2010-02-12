@@ -1,0 +1,13 @@
+Buildfile: D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\build.xml
+checkstyle:
+[checkstyle] Running Checkstyle 5.0 on 24 files
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:187:35: warning: Expected @param tag for 'otherCell'.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:189:12: warning: 'if' is not followed by whitespace.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:190:10: warning: '{' should be on the previous line.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:191:16: warning: 'if' is not followed by whitespace.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:192: warning: Line is longer than 100 characters.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:192:101: warning: '+' is not followed by whitespace.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:194:21: warning: 'if' is not followed by whitespace.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:195: warning: Line is longer than 100 characters.
+[checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:195:101: warning: '+' is not followed by whitespace.
+BUILD SUCCESSFUL
