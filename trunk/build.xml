@@ -295,6 +295,20 @@
     <delete dir="${dist}/jpacman-${version}"/>
   </target>
 
-
+	<target name="doc" description="Create Javadoc">
+		<mkdir dir="${basedir}/doc/javadoc/main"/>
+		<javadoc sourcepath="src/main/java"
+		         destdir="doc/javadoc/main"
+		         author="true"
+		         version="true"
+		         use="true"
+		         windowtitle="Docs for exercise1">
+		    <doctitle><![CDATA[<h1>Docs for exercise1</h1>]]></doctitle>
+		    <bottom><![CDATA[<i>Copyright &#169; 2010 Cees-Willem Hofstede. 
+				All Rights Reserved.</i>]]>
+		    </bottom>
+		    <tag name="todo" scope="all" description="To do:"/>
+		</javadoc>
+	</target>
 
 </project>
