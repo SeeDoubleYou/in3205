@@ -185,7 +185,14 @@ public class Cell {
      * @return true iff the other cell is immediately adjacent.
      */
      public boolean adjacent(Cell otherCell) {
-    	 return false;
+    	 boolean adjacent = false;
+    	 if(this.getX() == otherCell.getX()) {
+    		 adjacent = otherCell.getY() == this.getY() - 1 || otherCell.getY() == this.getY() +1; 
+    	 }
+    	 else if(this.getY() == otherCell.getY()) {
+    		 adjacent = otherCell.getX() == this.getX() - 1 || otherCell.getX() == this.getX() +1; 
+    	 }
+    	 return adjacent;
      }
     
     /**
