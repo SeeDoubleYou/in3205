@@ -295,6 +295,10 @@
     <delete dir="${dist}/jpacman-${version}"/>
   </target>
 
+	<!-- 
+	Create javadoc documentation
+	============================
+	-->	
 	<target name="doc" description="Create Javadoc">
 		<mkdir dir="${basedir}/doc/javadoc/main"/>
 		<javadoc sourcepath="src/main/java"
