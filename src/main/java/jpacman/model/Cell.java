@@ -186,6 +186,7 @@ public class Cell {
      */
      public boolean adjacent(Cell otherCell) {
     	 return false;
+    	 //svn test by gio
      }
     
     /**
