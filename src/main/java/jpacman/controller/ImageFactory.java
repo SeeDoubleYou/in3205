@@ -112,14 +112,17 @@ public class ImageFactory {
         anim = anim % playerAnimationCount();
         Image img = null;
         int dirIndex = 0;
+        final int dirIndex1 = 1;
+        final int dirIndex2 = 2;
+        final int dirIndex3 = 3;
         if (dx > 0) {
             dirIndex = 0;
         } else if (dx < 0) {
-            dirIndex = 1;
+            dirIndex = dirIndex1;
         } else if (dy > 0) {
-            dirIndex = 2;
+            dirIndex = dirIndex2;
         } else if (dy < 0) {
-            dirIndex = 3;
+            dirIndex = dirIndex3;
         } else {
             assert dx == 0;
             assert dy == 0;
