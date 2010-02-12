@@ -1,6 +1,7 @@
 Buildfile: D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\build.xml
 checkstyle:
 [checkstyle] Running Checkstyle 5.0 on 24 files
+[checkstyle] /home/sdy/workspace/jPacMan/jpacman-4.3.2/src/main/java/jpacman/controller/ImageFactory.java:125:24: warning: '3' is a magic number.
 [checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:187:35: warning: Expected @param tag for 'otherCell'.
 [checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:189:12: warning: 'if' is not followed by whitespace.
 [checkstyle] D:\TU Delft\IN3205 - Software Engineering 2\jpacman-4.3.3\src\main\java\jpacman\model\Cell.java:190:10: warning: '{' should be on the previous line.
