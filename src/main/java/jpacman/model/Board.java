@@ -71,7 +71,7 @@ public class Board {
     }
 
     /**
-     * Return the cell at position (x,y). Precondition: (x,y) falls wihtin the
+     * Return the cell at position (x,y). Precondition: (x,y) falls within the
      * borders of the board. Postcondition: returned cell exists and is not
      * null.
      *

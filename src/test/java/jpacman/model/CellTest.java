@@ -16,7 +16,7 @@ import org.junit.Test;
 public class CellTest {
 
     /**
-     * Width & heigth of board to be used.
+     * Width & height of board to be used.
      */
     private final int width = 4, height = 5;
 
@@ -29,6 +29,7 @@ public class CellTest {
      * The "Cell Under Test".
      */
     private Cell boundaryCell, centerCell;
+    private Cell cellA, cellB;
 
     /**
      * Actually create the board and the cells.
@@ -60,16 +61,21 @@ public class CellTest {
     @Test
     public void testCellAdjacent() {
     	//test down adjacency
-    	boundaryCell = aBoard.getCell(2, 2);
-    	centerCell = aBoard.getCell(2, 3);
-    	assertTrue(boundaryCell.adjacent(centerCell));
+    	cellA = aBoard.getCell(2, 2);
+    	cellB = aBoard.getCell(2, 3);
+    	assertTrue(cellA.adjacent(cellB));
     	
     	//test up adjacency
-    	centerCell = aBoard.getCell(2, 1);
-    	assertTrue(boundaryCell.adjacent(centerCell));
+    	cellB = aBoard.getCell(2, 1);
+    	assertTrue(cellA.adjacent(cellB));
     	
-    	//test left
+    	//test left adjacency
+    	cellB = aBoard.getCell(1, 2);
+    	assertTrue(cellA.adjacent(cellB));
     	
+    	//test right adjacency
+    	cellB = aBoard.getCell(3, 2);
+    	assertTrue(cellA.adjacent(cellB));
     }
      
 }
