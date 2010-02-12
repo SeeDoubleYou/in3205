@@ -58,6 +58,10 @@ public class CellTest {
 
     /**
      * Test if a cell is adjacent to another cell
+     * A cell is adjacent to another cell if it lies directly next to 
+     * another cell. We have four possible directions to check
+     * Check if a cell that lies to the right, left, up or down. 
+     * If so it should be adjacent
      */
     @Test
     public void testCellAdjacent() {
