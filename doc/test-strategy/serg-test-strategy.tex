@@ -1,0 +1,254 @@
+\documentclass{article}
+\usepackage{pslatex}
+
+\newcommand{\todo}{\emph{To be done.}}
+
+\title{SERG Test Strategy}
+\author{Arie van Deursen}
+\date{Version 0.2, 31 January 2010}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+This document describes the test strategy adopted in software
+development projects conducted under the responsibility of the
+Software Engineering Research Group (SERG) of 
+Delft University of Technology.
+
+The document provides guidelines on how to conduct testing.
+It is inspired by 
+\begin{enumerate}
+\item The concept of a strategy document as discussed by 
+\cite[Ch.~20]{Pezze:2008}
+\item The notion of a \emph{test catalog} as proposed by 
+ \cite{Marick:1995} and discussed by \cite[Section~11.4]{Pezze:2008}.
+\item The collection of \emph{test design patterns} provided by
+ \cite{Binder:2000}.
+\end{enumerate}
+
+The present document is in use at the course \emph{Software Testing
+and Quality Engineering}, and plays a role in research projects
+conducted at SERG.
+
+This is a working document which is continuously in progress.
+During each project, the test strategy is evaluated, and if necessary
+adjusted. In particular, whenever a fault slips through testing,
+a critical \emph{root cause analysis} is conducted
+\cite[Section 20.7]{Pezze:2008}, and if possible the testing strategy
+is adjusted so that in future faults like these are more likely
+to be captured.
+
+
+\section{Test Process}
+
+The basic test process involves the following steps:
+\begin{itemize}
+\item Requirements are explicitly documented.
+\item A requirements specification immediately includes a (number of)
+   test case specifications.
+ \item Design decisions are explicitly documented.
+ \item Requirements as well design documents are used to derive
+  test case specifications before coding starts.
+\item The catalog of test patterns (Section~\ref{Patterns}) is used
+  to derive test cases where appropriate.
+\item Test code is written as much as possible \emph{before} 
+  the corresponding production code (in line with \cite{Beck:2003}
+\item After implementing a feature, a coverage tool is used to analyze
+  whether all code is indeed covered.
+\end{itemize}
+
+
+\paragraph{Assertions and Design by Contract}
+Where possible, design decisions and coding assumptions are documented
+by means of assertions. In particular:
+\begin{itemize}
+\item Class invariants are encoded in Boolean function \texttt{invariant}.
+  Assertion checking the invariant are included at the start and at the
+  end of every public method.
+\item Method preconditions are encoded as assertions at the beginning
+  of each method.
+\item Method post conditions are encoded as assertions at the end of
+  each method, or just before the return statement.
+\item All assertions are side-effect free.
+\item \begin{sloppypar}
+  Exceptions are thrown in line with the principles of Design-by-Contract
+  \cite{Meyer:1992}.
+  \end{sloppypar}
+\end{itemize}
+
+
+%% \paragraph{Test Automation}
+
+%% JUnit
+
+%% Covertura, Emma
+
+\newcounter{patterncnt}
+\setcounter{patterncnt}{-1}
+
+%\newcommand{\entry}[1]{\par\medskip\noindent\textbf{#1:}\ }
+\newcommand{\entry}[1]{\item \emph{#1}:\ }
+\newcommand{\pattern}[1]{
+ \refstepcounter{patterncnt}
+ \paragraph{Pattern \thepatterncnt: #1}
+}
+\newcommand{\model}{\entry{Model Under Analysis}}
+\newcommand{\faults}{\entry{Fault Model}}
+\newcommand{\adequacy}{\entry{Adequacy}}
+\newcommand{\strategy}{\entry{Test Strategy}}
+
+\section{A Catalog of Test Patterns} \label{Patterns}
+
+\subsection{The Catalog Format}
+
+\pattern{Template}
+For each entry in the catalog, we present the following information:
+\begin{itemize}
+\model 
+  The artefact / document that we inspect in order
+  to arrive at a test case;
+\faults 
+  The sort of faults that we expect to find.
+\strategy
+  The testing steps that must be taken to have a good chance
+  to find these fault. The steps are derived from the model under analysis.
+\adequacy
+  A way of indicating to what extent we are done when adopting
+  this strategy. This is typically expressed as a percentage of elements
+  in the model under analysis that is to be covered. 
+  (see \cite[Chapter 9]{Pezze:2008}.
+\end{itemize}
+
+\subsection{Boundary Values}
+
+\pattern{Boundary values}
+\begin{itemize}
+\model 
+  Design or requirements documents
+\faults 
+  Boundaries often give rise to ``off-by-one'' errors
+\strategy 
+  For each boundary test one point that is exeactly on the
+  boundary, one that is just off the boundary. 
+  (see also the $1\times1$ strategy from \cite{Binder:2000},
+  and the sample test catalog in \cite[Table 11.7]{Pezze:2008}
+  inspired by \cite{Marick:1995}).
+\adequacy
+  A boundary is adequately checked if it is execued with one value
+  on the boundary as well as one just off the boundary.
+  Coverage is given by the number of adequately tested boundaries
+  divided by the total number of boundaries occurring in the 
+  specs / designs.
+\end{itemize}
+
+ 
+\subsection{Decision Logic}
+
+\pattern{Basic Decision Logic} 
+\label{basic-logic}
+Requirements often involve simple if-then-else decision logic 
+in one way or another, which is tested through this pattern.
+\begin{itemize}
+\model 
+  Design or requirements document
+\faults
+  Either the coding of the condition could be wrong, 
+  or the selected action taken in the
+  ``then'' or the ``else'' branch could be the wrong one.
+\strategy
+  For each decision involving a ``then'' and an ``else'' part,
+  two test cases are needed, one capturing the then, and one capturing
+  the else part.
+\adequacy
+  Branch coverage, which also ensures that implicit (omitted) 
+  else branches are covered as well
+  (see \cite[Section 12.3]{Pezze:2008}).
+\end{itemize}
+
+
+\pattern{Complex Decision Logic}
+More complex decision logic (compared to Pattern~\ref{basic-logic})
+may involve conditions composed from a range of predicates and
+Boolean operators. 
+\begin{itemize}
+\model
+  The complex decision logic should be modeled through a decision table.
+\faults
+  Incorrect Boolean operators, incorrect bracketing, negation forgotten,
+  cases forgotten, ...
+\strategy
+  Ensure each basic condition contained in the complex decision
+   once yields true and once yields false
+\begin{sloppypar}
+\adequacy
+  Modified Condition / Decision Coverage (MC/DC)
+  (see \cite[Section 12.4, 14.3]{Pezze:2008}; called each-condition / all conditions
+  by \cite{Binder:2000}).
+\end{sloppypar}
+\end{itemize}
+
+\pattern{Exception Handling}
+\begin{itemize}
+\model
+  Design documents including explicit 
+  specifications of exceptions to be raised under specific circumstances.
+\faults
+  Incorrect raising and handling of exceptions.
+\strategy
+  Throwing exceptions will usually be done in if-then-else structures,
+  and hence testing is covered by Pattern~\ref{basic-logic}.
+  Therefore, testing exception handling should focus on ensuring that
+  only specified exceptions can be propagated, and that other
+  exceptions are caught and handled appropriately.
+  See also \cite[Section 15.12]{Pezze:2008}.
+  A challenge in testing exception handling is usually controllability:
+  being able to trigger the event that causes the exception.
+\adequacy
+  The ``try'' as well as the ``catch'' block of each try-catch
+  statement should be covered.
+\end{itemize}
+
+\subsection{File I/O}
+
+\emph{Writing the File I/O patterns is left as an exercise.}
+
+
+
+\subsection{Further Test Patterns}
+
+Other test patterns that are used include:
+\begin{itemize}
+\item Category/Partition
+\item Pairwise Combination Testing
+\item Iteration
+\item Polymorphism
+\item State Machines
+\item Decision Tables
+\end{itemize}
+Describing these is work in progress.
+
+
+%% \begin{itemize}
+%% \model 
+%%   Requirements or design documents in which combinations of values
+%%   from different domains determine the outcome of an operation
+%% \faults
+%%   Due to the potential combinatorial explosion of possible values,
+%%   it is easy to oversee a case.
+%% \strategy
+%%   In the \emph{category-partition} approach the \emph{domains} are
+%%   split into categories, out of which specific values are selected.
+%%   Furthermore, for so-called \emph{single} or \emph{error}-values,
+%%   combinations are not tested anymore.
+
+%%   In the \emph{pairwise combination} approach
+%% \adequacy
+  
+%% \end{itemize}
+
+
+
+\bibliographystyle{apalike}
+\bibliography{test}
+
+\end{document}
