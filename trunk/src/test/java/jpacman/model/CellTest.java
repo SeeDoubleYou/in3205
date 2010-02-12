@@ -24,14 +24,12 @@ public class CellTest {
     /**
      * The board the cells occur on.
      */
-    private Board aBoard;
-    private Board differentBoard;
+    private Board aBoard, differentBoard;
 
     /**
      * The "Cell Under Test".
      */
-    private Cell boundaryCell, centerCell;
-    private Cell cellA, cellB;
+    private Cell boundaryCell, centerCell, cellA, cellB;
 
     /**
      * Actually create the board and the cells.
