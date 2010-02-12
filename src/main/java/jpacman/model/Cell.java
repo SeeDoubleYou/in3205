@@ -186,11 +186,14 @@ public class Cell {
      */
      public boolean adjacent(Cell otherCell) {
     	 boolean adjacent = false;
-    	 if(this.getX() == otherCell.getX()) {
-    		 adjacent = otherCell.getY() == this.getY() - 1 || otherCell.getY() == this.getY() +1; 
-    	 }
-    	 else if(this.getY() == otherCell.getY()) {
-    		 adjacent = otherCell.getX() == this.getX() - 1 || otherCell.getX() == this.getX() +1; 
+    	 if(this.getBoard() == otherCell.getBoard())
+    	 {
+	    	 if(this.getX() == otherCell.getX()) {
+	    		 adjacent = otherCell.getY() == this.getY() - 1 || otherCell.getY() == this.getY() +1; 
+	    	 }
+	    	 else if(this.getY() == otherCell.getY()) {
+	    		 adjacent = otherCell.getX() == this.getX() - 1 || otherCell.getX() == this.getX() +1; 
+	    	 }
     	 }
     	 return adjacent;
      }
