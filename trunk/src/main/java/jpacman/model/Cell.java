@@ -1,6 +1,5 @@
 package jpacman.model;
 
-
 /**
  * A Cell keeps track of its (x,y) position on the board, and the potential
  * Guest occupying the Cell. It's responsibilities include identifying
