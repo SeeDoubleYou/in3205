@@ -1,0 +1,21 @@
+[EMMA v2.0.5312 report, generated Fri Feb 19 13:46:40 CET 2010]
+-------------------------------------------------------------------------------
+OVERALL COVERAGE SUMMARY:
+
+[class, %]	[method, %]	[block, %]	[line, %]	[name]
+97%  (28/29)!	89%  (198/223)	71%  (3290/4621)!	78%  (645.4/831)!	all classes
+
+OVERALL STATS SUMMARY:
+
+total packages:	2
+total classes:	29
+total methods:	223
+total executable files:	21
+total executable lines:	831
+
+COVERAGE BREAKDOWN BY PACKAGE:
+
+[class, %]	[method, %]	[block, %]	[line, %]	[name]
+93%  (13/14)!	88%  (122/139)	64%  (1784/2802)!	71%  (334.4/470)!	jpacman.model
+100% (15/15)	90%  (76/84)	83%  (1506/1819)	86%  (310.9/361)	jpacman.controller
+-------------------------------------------------------------------------------
