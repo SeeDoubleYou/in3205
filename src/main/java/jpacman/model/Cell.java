@@ -185,6 +185,8 @@ public class Cell {
      * @param otherCell the other cell to check against.
      */
      public boolean adjacent(Cell otherCell) {
+    	 assert otherCell != null;
+    	 
     	 boolean adjacent = false;
     	 if (this.getBoard() == otherCell.getBoard()) {
 	    	 if (this.getX() == otherCell.getX()) {
@@ -193,7 +195,13 @@ public class Cell {
 	    	 else if (this.getY() == otherCell.getY()) {
 	    		 adjacent = otherCell.getX() == this.getX() - 1 || otherCell.getX() == this.getX() + 1; 
 	    	 }
+	    	 else
+	    		 assert !adjacent;
     	 }
+    	 else
+    		 assert !adjacent;
+    	 
+    	 assert invariant();
     	 return adjacent;
      }
     
