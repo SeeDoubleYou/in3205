@@ -2,6 +2,7 @@ package jpacman.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import jpacman.TestUtils;
 
 import org.junit.Before;
@@ -111,5 +112,20 @@ public class BoardTest {
         // else: nothing to test -- no guarantees what so ever!
     }
 
-
+    /**
+     * Do some tests to make sure that the withinBorders
+     * function returns the correct boolean value.
+     */
+    @Test
+    public void testWithinBorders() {
+    	assertTrue(theBoard.withinBorders(0, 0));
+    	assertTrue(theBoard.withinBorders(width, height));
+    	assertTrue(theBoard.withinBorders(width - 1, height));
+    	assertTrue(theBoard.withinBorders(width, height - 1));
+    	assertTrue(theBoard.withinBorders(width - 1, height - 1));
+    	assertFalse(theBoard.withinBorders(width + 1, height));
+    	assertFalse(theBoard.withinBorders(width, height + 1));
+    	assertFalse(theBoard.withinBorders(width + 1, height + 1));
+    	assertFalse(theBoard.withinBorders(-width, -height));
+    }
 }

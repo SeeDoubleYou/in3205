@@ -47,7 +47,7 @@ public class Board {
      * A board's invariant is simply that both the width and the height are not
      * negative.
      *
-     * @return True iff widht and height nonnegative.
+     * @return True iff width and height nonnegative.
      */
     protected boolean invariant() {
         return width >= 0 && height >= 0;
@@ -141,8 +141,9 @@ public class Board {
      * @return True iff (x,y) is on the board.
      */
     public boolean withinBorders(int x, int y) {
-         // TODO actual implementation left as an exercise.
-         return true;
+         boolean withinBorders = x >= 0 && x <= width;
+         withinBorders = withinBorders && y >= 0 && y <= height;
+         return withinBorders;
     }
 
     /**
