@@ -14,6 +14,7 @@ import jpacman.model.EngineTest;
 import jpacman.model.GameTest;
 import jpacman.model.ObserverTest;
 import jpacman.model.PlayerMoveTest;
+import jpacman.model.GuestTest;
 
 
 
@@ -42,7 +43,8 @@ import jpacman.model.PlayerMoveTest;
     EngineTest.class,
     ObserverTest.class,
     PlayerMoveTest.class,
-    ImageFactoryTest.class
+    ImageFactoryTest.class,
+    GuestTest.class
 })
 
 public final class TestAll  {
