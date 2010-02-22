@@ -63,12 +63,13 @@ public class Cell {
     }
 
      /**
-     * TODO Invent invariant for the guest association?
-     *
-     * @return true for the time being.
+     * A cell can be occupied by a guest and if so
+     * the gesut should occupy the cell.
+     * 
+     * @return true iff this is the case.
      */
      public boolean guestInvariant() {
-         return true;
+         return inhabitant == null || this.equals(inhabitant.getLocation());
      }
 
 
@@ -99,7 +100,11 @@ public class Cell {
      *            The new guest of this cell.
      */
     void setGuest(Guest aGuest) {
-        inhabitant = aGuest;
+        assert this.equals(aGuest.getLocation());
+    	assert !this.isOccupied();
+    	inhabitant = aGuest;
+    	assert aGuest.equals(this.inhabitant);
+    	assert invariant();
     }
 
 
@@ -113,7 +118,11 @@ public class Cell {
      * method exit it does.
      */
     void free() {
-        inhabitant = null;
+    	assert this.isOccupied();
+    	assert !this.equals(inhabitant.getLocation());
+    	inhabitant = null;
+    	assert !this.isOccupied();
+    	assert invariant();
     }
 
     /**
@@ -190,16 +199,20 @@ public class Cell {
     	 boolean adjacent = false;
     	 if (this.getBoard() == otherCell.getBoard()) {
 	    	 if (this.getX() == otherCell.getX()) {
-	    		 adjacent = otherCell.getY() == this.getY() - 1 || otherCell.getY() == this.getY() + 1; 
+	    		 adjacent = otherCell.getY() == this.getY() - 1 
+	    		 			||  otherCell.getY() == this.getY() + 1; 
 	    	 }
 	    	 else if (this.getY() == otherCell.getY()) {
-	    		 adjacent = otherCell.getX() == this.getX() - 1 || otherCell.getX() == this.getX() + 1; 
+	    		 adjacent = otherCell.getX() == this.getX() - 1 
+	    		 			|| otherCell.getX() == this.getX() + 1; 
 	    	 }
-	    	 else
+	    	 else {
 	    		 assert !adjacent;
+	    	 }
     	 }
-    	 else
+    	 else {
     		 assert !adjacent;
+    	 }
     	 
     	 assert invariant();
     	 return adjacent;
