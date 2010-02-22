@@ -93,8 +93,8 @@ public class Board {
     }
 
     /**
-     * Return the guest occupying position (x,y), or null if the cell is emtpy.
-     * Precondition: (x,y) falls wihtin the borders of the board.
+     * Return the guest occupying position (x,y), or null if the cell is empty.
+     * Precondition: (x,y) falls within the borders of the board.
      *
      * @param x
      *            Horizontal coordinate of the requested cell
