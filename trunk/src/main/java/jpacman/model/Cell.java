@@ -64,7 +64,7 @@ public class Cell {
 
      /**
      * A cell can be occupied by a guest and if so
-     * the gesut should occupy the cell.
+     * the guest should occupy the cell.
      * 
      * @return true iff this is the case.
      */
