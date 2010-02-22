@@ -3,6 +3,8 @@ package jpacman.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import jpacman.TestUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,5 +63,61 @@ public class GuestTest {
         assertNull(theGuest.getLocation());
     }
 
-
+    /**
+     * Test occupy and deoccupy for Guest cell occupation
+     */
+    @Test
+    public void testOccupyDeoccupy() {
+    	theGuest.occupy(theCell);
+    	assertTrue(theGuest.getLocation().equals(theCell));
+    	assertTrue(theCell.getInhabitant().equals(theGuest));
+    	assertFalse(theGuest.getLocation() == null);
+    	assertFalse(theCell.getInhabitant() == null);
+    	
+    	theGuest.deoccupy();
+    	assertTrue(theGuest.getLocation() == null);
+    	assertTrue(theCell.getInhabitant() == null);
+    	assertNull(theGuest.getLocation());
+    	assertNull(theCell.getInhabitant());
+    }
+    
+    /**
+     * Test an invalid occupy-occupy sequence
+     */
+    @Test
+    public void testDoubleOccupy() {
+    	theGuest.occupy(theCell);
+    	boolean failureGenerated;
+    	if (TestUtils.assertionsEnabled()) {
+    		try {
+    			theGuest.occupy(theCell);
+    			failureGenerated = false;
+    		}
+    		catch (AssertionError ae) {
+    			failureGenerated = true;
+    		}
+    		
+    		assertTrue(failureGenerated);    		
+    	}
+    }
+    
+    /**
+     * 
+     *  Test illegal use of Cell.setGuest()
+     */
+    @Test
+    public void testIllegalsetGuest() {
+    	boolean failureGenerated;
+    	if (TestUtils.assertionsEnabled()) {
+    		try {
+    			anotherCell.setGuest(anotherGuest);
+    			failureGenerated = false;
+    		}
+    		catch (AssertionError ae) {
+    			failureGenerated = true;
+    		}
+    		
+    		assertTrue(failureGenerated);
+    	}    	
+    }
 }

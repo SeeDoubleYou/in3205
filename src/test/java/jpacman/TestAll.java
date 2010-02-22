@@ -5,9 +5,7 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
 import jpacman.controller.ImageFactoryTest;
-
 import jpacman.model.BoardTest;
 import jpacman.model.CellTest;
 import jpacman.model.EngineTest;
