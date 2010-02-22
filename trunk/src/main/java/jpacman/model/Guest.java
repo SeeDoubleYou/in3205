@@ -47,11 +47,13 @@ public abstract class Guest {
     }
 
      /**
-      * Actual invariant left as an exercise.
+      * The location is either null (upon creation) or
+      * it is a Cell of which this is an inhabitant.
+      * 
       * @return true iff invariant holds.
       */
      protected boolean guestInvariant() {
-         return true;
+    	 return location == null || this.equals(location.getInhabitant());
      }
 
 
@@ -74,10 +76,14 @@ public abstract class Guest {
      */
     public void occupy(Cell aCell) {
         assert guestInvariant();
+        assert this.location == null;
+        assert !aCell.isOccupied();
 
         location = aCell;
         aCell.setGuest(this);
 
+        assert aCell.equals(this.location);
+        assert this.equals(aCell.getInhabitant());
         assert guestInvariant();
     }
 
@@ -96,6 +102,7 @@ public abstract class Guest {
         location = null;
         // Reset the cell's inhabitant pointer.
         oldLocation.free();
+        assert !oldLocation.isOccupied();
         assert guestInvariant();
     }
 
