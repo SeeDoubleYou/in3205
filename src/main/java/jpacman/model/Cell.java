@@ -126,7 +126,7 @@ public class Cell {
     }
 
     /**
-     * Determine iff this cell is occupied.
+     * Determine whether this cell is occupied.
      *
      * @return true iff the cell is occupied.
      */
