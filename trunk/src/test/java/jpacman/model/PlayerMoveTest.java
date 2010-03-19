@@ -63,46 +63,78 @@ public class PlayerMoveTest extends MoveTest {
     }
     
     @Test
-    /**
-     * Test player moves
+    /*
+     * A move to a wall should not be possible
      */
-    public void testPlayerMoves() {
-    	PlayerMove move = null;
-    	
-    	//a move to a wall should not be possible
-    	move = createMove(getWallCell());
+    public void testMoveToWall() {
+    	PlayerMove move = createMove(getWallCell());
     	assertFalse(move.movePossible());
     	assertFalse(move.playerDies());
-    	
-    	//a move to a monster should kill me
-    	move = createMove(getMonsterCell());
+    	assertTrue(move.invariant());
+    }
+    
+    @Test
+    /*
+     * A move to a monster should kill me
+     */
+    public void testMoveToMonster() {
+    	PlayerMove move = createMove(getMonsterCell());
     	assertFalse(move.movePossible());
     	assertTrue(move.playerDies());
-    	
-    	//a move to an empty cell should be ok
-    	move = createMove(getEmptyCell());
+    	assertTrue(move.invariant());
+    }
+    
+    @Test
+    /*
+     * A move to an empty cell should be ok
+     */
+    public void testMoveToEmptyCell() {
+    	PlayerMove move = createMove(getEmptyCell());
     	assertTrue(move.movePossible());
     	assertFalse(move.playerDies());
     	move.apply();
     	assertTrue(move.moveDone());
-    	
-    	//eat food
+    	assertTrue(move.invariant());
+    }
+    
+    @Test
+    /*
+     * Test that eating food should increase my score
+     */
+    public void testEatingFood() {
+    	PlayerMove move = createMove(getFoodCell());
     	int food = getThePlayer().getPointsEaten();
-    	move = createMove(getFoodCell());
+    	assertEquals(0, food);
     	assertTrue(move.movePossible());
     	assertEquals(1, move.getFoodEaten());
     	move.apply();
     	assertTrue(move.moveDone());
     	assertEquals(food + 1, getThePlayer().getPointsEaten());
-    	
-    	//win the game
-    	Cell lastFood = getTheGame().getBoard().getCell(0, 2);
-    	move = createMove(lastFood);
+    	assertTrue(move.invariant());
+    }
+    
+    @Test
+    /*
+     * Test winning the game by eating all food
+     */
+    public void testWinTheGame() {
+    	Cell theOtherFoodCell = getTheGame().getBoard().getCell(0, 2);
+    	boolean isFood = theOtherFoodCell.getInhabitant() instanceof Food;
+    	assertTrue(isFood);
+    	PlayerMove move = createMove(getTheGame().getBoard().getCell(0, 2));
+    	assertTrue(move.movePossible());
     	move.apply();
+    	assertTrue(move.moveDone());
+    	assertTrue(move.invariant());
+    	move = createMove(getFoodCell());
+    	assertTrue(move.movePossible());
+    	move.apply();
+    	assertTrue(move.moveDone());
     	assertTrue(getTheGame().gameOver());
     	assertTrue(getTheGame().playerWon());
-    }	
-
+    	assertFalse(getTheGame().playerDied());
+    	assertTrue(move.invariant());
+    }
     
     /**
      * Create a move object that will be tested.

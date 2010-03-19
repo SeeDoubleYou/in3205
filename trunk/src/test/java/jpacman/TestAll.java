@@ -10,6 +10,7 @@ import jpacman.model.BoardTest;
 import jpacman.model.CellTest;
 import jpacman.model.EngineTest;
 import jpacman.model.GameTest;
+import jpacman.model.MonsterMoveTest;
 import jpacman.model.ObserverTest;
 import jpacman.model.PlayerMoveTest;
 import jpacman.model.GuestTest;
