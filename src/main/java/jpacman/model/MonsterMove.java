@@ -49,6 +49,10 @@ public class MonsterMove extends Move {
     protected boolean tryMoveToGuest(Guest targetGuest) {
         assert tryMoveToGuestPrecondition(targetGuest)
             : "percolated precondition";
+        if(targetGuest.guestType() == Guest.PLAYER_TYPE)
+        {
+        	die();
+        }
         return false;
     }
     

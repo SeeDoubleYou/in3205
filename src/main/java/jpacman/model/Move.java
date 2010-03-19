@@ -220,7 +220,4 @@ public abstract class Move {
         assert mover.getLocation() != null;
         return to != null && mover.getLocation().equals(to);
     }
-
-
-
 }
