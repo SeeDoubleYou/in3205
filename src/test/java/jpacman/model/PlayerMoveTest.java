@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import jpacman.TestUtils;
 
 import org.junit.Test;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Accessor.GetterSetterReflection;
 
 /**
  * Specialize the general MoveTest test suite to one
@@ -49,7 +48,7 @@ public class PlayerMoveTest extends MoveTest {
     		boolean movePossible = false;
     		try {    			
     			Board board = getTheGame().getBoard();
-    			Cell cellOutside = board.getCell(board.getWidth()+1, board.getHeight()+1);
+    			Cell cellOutside = board.getCell(board.getWidth() + 1, board.getHeight() + 1);
     			PlayerMove move = createMove(cellOutside);
     			movePossible = move.movePossible();
     			failureGenerated = false;
