@@ -37,7 +37,7 @@ public class MonsterMoveTest extends MoveTest {
 	public void playerDies() {
 		Cell playerCell = getPlayerCell();
 		MonsterMove monsterMove = createMove(playerCell);
-		assertEquals(getThePlayer(), monsterMove.getMonster());
+		assertEquals(getThePlayer(), playerCell.getInhabitant());
 		assertEquals(getThePlayer(), playerCell.getInhabitant());
 		assertTrue(monsterMove.playerDies());
 		assertTrue(monsterMove.invariant());
