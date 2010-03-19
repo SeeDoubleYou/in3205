@@ -41,6 +41,7 @@ import jpacman.model.GuestTest;
     EngineTest.class,
     ObserverTest.class,
     PlayerMoveTest.class,
+    MonsterMoveTest.class,
     ImageFactoryTest.class,
     GuestTest.class
 })
