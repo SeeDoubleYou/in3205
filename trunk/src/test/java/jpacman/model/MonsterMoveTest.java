@@ -3,6 +3,7 @@ package jpacman.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import jpacman.TestUtils;
 
 import org.junit.Test;
 
@@ -11,6 +12,12 @@ import org.junit.Test;
  * that is tailored to MonsterMoves.
 s */
 public class MonsterMoveTest extends MoveTest {
+	
+	/**
+     * The move the monster would like to make.
+     */
+	private MonsterMove aMonsterMove;
+	
     /**
      * Create a move object that will be tested.
      *  @see jpacman.model.MoveTest#createMove(jpacman.model.Cell)
@@ -19,7 +26,7 @@ public class MonsterMoveTest extends MoveTest {
      */
 	@Override
 	protected MonsterMove createMove(Cell target) {
-		aMonsterMove = new MonsterMove(getThePlayer(), target);
+		aMonsterMove = new MonsterMove(getTheMonster(), target);
         return aMonsterMove;
 	}
 
@@ -27,47 +34,62 @@ public class MonsterMoveTest extends MoveTest {
 	 * test that the player will in fact die when a monster meets a player.
 	 */
 	@Test
-	public void playerDies()
-	{
+	public void playerDies() {
 		Cell playerCell = getPlayerCell();
-		Guest cellInhabitant = playerCell.getInhabitant()
-		MonsterMove MonsterMove = createMove(playerCell);
-		assertTrue(monsterMove.withinBorder());
-		assertEquals(getThePlayer(), mosterMove.getPlayer());
+		MonsterMove monsterMove = createMove(playerCell);
+		assertEquals(getThePlayer(), monsterMove.getMonster());
 		assertEquals(getThePlayer(), playerCell.getInhabitant());
 		assertTrue(monsterMove.playerDies());
 		assertTrue(monsterMove.invariant());
 	}
 
 	@Test
-	public void allowMove()
-	{
+	public void allowMove() {
 		Cell emptyCell = getEmptyCell();
-		MonsterMove MonsterMove = createMove(emptyCell);
-		assertTrue(monsterMove.withinBorder());
+		MonsterMove monsterMove = createMove(emptyCell);
 		assertTrue(monsterMove.movePossible());
-		monsterMove.move();
-		assertTrue(MonsterMove.moveDone());
+		monsterMove.apply();
+		assertTrue(monsterMove.moveDone());
 		assertTrue(monsterMove.invariant());
 	}
 	
 	@Test
-	public void denyMoveWhenWall()
-	{
+	public void denyMoveWhenWall() {
 		Cell wallCell = getWallCell();
-		MonsterMove MonsterMove = createMove(wallCell);
-		assertTrue(monsterMove.withinBorder());
+		MonsterMove monsterMove = createMove(wallCell);
 		assertFalse(monsterMove.movePossible());
 		assertTrue(monsterMove.invariant());
 	}
 	
 	@Test
-	public void denyMoveWhenMonster()
-	{
+	public void denyMoveWhenMonster() {
 		Cell monsterCell = getMonsterCell();
-		MonsterMove MonsterMove = createMove(monsterCell);
-		assertTrue(monsterMove.withinBorder());
+		MonsterMove monsterMove = createMove(monsterCell);
 		assertFalse(monsterMove.movePossible());
 		assertTrue(monsterMove.invariant());
 	}
+	
+	@Test
+    /**
+     * Test moving a monster to a cell outside the borders of the board
+     */
+    public void testMovingOutsideBorders() {
+    	if (TestUtils.assertionsEnabled()) {
+    		boolean failureGenerated;
+    		boolean movePossible = false;
+    		try {    			
+    			Board board = getTheGame().getBoard();
+    			Cell cellOutside = board.getCell(board.getWidth() + 1, board.getHeight() + 1);
+    			MonsterMove move = createMove(cellOutside);
+    			movePossible = move.movePossible();
+    			failureGenerated = false;
+    		}
+    		catch (AssertionError ae) {
+    			failureGenerated = true;
+    		}
+    		
+    		assertTrue(failureGenerated);
+    		assertFalse(movePossible);
+    	}
+    }
 }
