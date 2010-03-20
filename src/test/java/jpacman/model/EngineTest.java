@@ -1,5 +1,6 @@
 package jpacman.model;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -37,7 +38,70 @@ public class EngineTest extends GameTestCase {
     }
 
      // Create state model test cases.
-    @Test public void addTestCasesHere() { }
-
-
+    /**
+     * Test Case 1: starting-playing-playing-playerwon-starting 
+     * as obtained from UML state diagram
+     */
+    @Test
+    public void testStateTransition1() {    	
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());    
+    	theEngine.movePlayer(-1, 0); //eat food left 
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.movePlayer(0, 1); //eat food down 
+    	assertTrue(theEngine.inGameOverState());
+    	assertTrue(theEngine.inWonState());
+    	theEngine.start();
+    	assertTrue(theEngine.inStartingState());
+    }
+    
+    /**
+     * Test Case 2: starting-playing-halted-playing
+     * as obtained from UML state diagram
+     */
+    @Test
+    public void testStateTransition2() {
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.quit();
+    	assertTrue(theEngine.inHaltedState());
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    }
+    
+    /**
+     * Test Case 3: starting-playing-playing-playerdied
+     * as obtained from UML state diagram
+     */
+    @Test
+    public void testStateTransition3() {
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.movePlayer(1, 0); //go to the empty cell to the right
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.movePlayer(-1, 1); //go to a monster
+    	assertTrue(theEngine.inGameOverState());
+    	assertTrue(theEngine.inDiedState());
+    }
+    
+    /**
+     * Test Case 4: starting-playing-playing-playerdied-starting
+     * as obtained from UML state diagram
+     */
+    @Test
+    public void testStateTransition4() {
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.moveMonster(getTheMonster(), 1, 0); //monster goes to empty cell
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.moveMonster(getTheMonster(), -1, -1); //monster goes to player
+    	assertTrue(theEngine.inGameOverState());
+    	assertTrue(theEngine.inDiedState());
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    }
 }

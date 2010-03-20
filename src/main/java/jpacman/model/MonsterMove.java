@@ -40,9 +40,9 @@ public class MonsterMove extends Move {
     }
     
     /**
-     * Attempt to move the moster towards a target guest.
+     * Attempt to move the monster towards a target guest.
      * @param targetGuest The guest that the monster will meet.
-     * @return false at all times, since the monsters cannor move over accoupied cells
+     * @return false at all times, since the monsters cannot move over occupied cells
      * @see jpacman.model.Move#tryMoveToGuest(jpacman.model.Guest)
      */
     @Override
