@@ -91,4 +91,9 @@ public class CellTest {
     	assertFalse(cellA.adjacent(cellB));
     }
      
+    @Test
+    public void testToString() {
+    	String cell = "0@[1,1]";
+    	assertEquals(cell, centerCell.toString());
+    }
 }

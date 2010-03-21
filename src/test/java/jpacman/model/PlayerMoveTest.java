@@ -35,6 +35,7 @@ public class PlayerMoveTest extends MoveTest {
         assertTrue(playerMove.movePossible());
         assertFalse(playerMove.playerDies());
         assertEquals(1, playerMove.getFoodEaten());
+        assertEquals(getTheFood(), getFoodCell().getInhabitant());
         assertTrue(playerMove.invariant());
     }
 
