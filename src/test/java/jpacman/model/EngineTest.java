@@ -54,6 +54,7 @@ public class EngineTest extends GameTestCase {
     	assertTrue(theEngine.inWonState());
     	theEngine.start();
     	assertTrue(theEngine.inStartingState());
+    	assertTrue(theEngine.invariant());
     }
     
     /**
@@ -69,6 +70,7 @@ public class EngineTest extends GameTestCase {
     	assertTrue(theEngine.inHaltedState());
     	theEngine.start();
     	assertTrue(theEngine.inPlayingState());
+    	assertTrue(theEngine.invariant());
     }
     
     /**
@@ -85,6 +87,7 @@ public class EngineTest extends GameTestCase {
     	theEngine.movePlayer(-1, 1); //go to a monster
     	assertTrue(theEngine.inGameOverState());
     	assertTrue(theEngine.inDiedState());
+    	assertTrue(theEngine.invariant());
     }
     
     /**
@@ -103,6 +106,7 @@ public class EngineTest extends GameTestCase {
     	assertTrue(theEngine.inDiedState());
     	theEngine.start();
     	assertTrue(theEngine.inStartingState());
+    	assertTrue(theEngine.invariant());
     }
     
     /**
@@ -123,6 +127,7 @@ public class EngineTest extends GameTestCase {
     	//now go from halted to starting
     	theEngine.start();
     	assertFalse(theEngine.inStartingState());
+    	assertTrue(theEngine.invariant());
     }
     
     /**
@@ -141,6 +146,7 @@ public class EngineTest extends GameTestCase {
     	assertTrue(theEngine.inGameOverState());
     	theEngine.start();
     	assertFalse(theEngine.inPlayingState());
+    	assertTrue(theEngine.invariant());
     }
     
     /**
@@ -153,6 +159,7 @@ public class EngineTest extends GameTestCase {
     	assertTrue(theEngine.inPlayingState());
     	theEngine.start();
     	assertFalse(theEngine.inStartingState());
+    	assertTrue(theEngine.invariant());
     }
     
     /**
@@ -181,5 +188,6 @@ public class EngineTest extends GameTestCase {
     	assertTrue(theEngine.inGameOverState());
     	theEngine.quit();
     	assertFalse(theEngine.inHaltedState());
+    	assertTrue(theEngine.invariant());
     }
 }
