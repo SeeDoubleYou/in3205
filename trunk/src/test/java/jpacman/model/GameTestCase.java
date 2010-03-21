@@ -79,7 +79,7 @@ public abstract class GameTestCase {
         thePlayer = theGame.getPlayer();
         theMonster = (Monster) monsterCell.getInhabitant();
     }
-
+    
     /**
      * Is the standard board created in the GameTestCase
      * setup correctly? Invoked from test method elsewhere,

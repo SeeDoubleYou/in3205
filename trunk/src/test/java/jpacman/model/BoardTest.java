@@ -127,4 +127,10 @@ public class BoardTest {
     	assertFalse(theBoard.withinBorders(width + 1, height + 1));
     	assertFalse(theBoard.withinBorders(-width, -height));
     }
+    
+    @Test
+    public void testToString() {
+    	String board = "00000\n00000\n00000\n00000\n00000\n00000\n00000\n00000\n00000\n00000\n";
+    	assertEquals(board, theBoard.toString());
+    }
 }

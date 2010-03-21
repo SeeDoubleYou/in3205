@@ -102,7 +102,7 @@ public class EngineTest extends GameTestCase {
     	assertTrue(theEngine.inGameOverState());
     	assertTrue(theEngine.inDiedState());
     	theEngine.start();
-    	assertTrue(theEngine.inPlayingState());
+    	assertTrue(theEngine.inStartingState());
     }
     
     /**
