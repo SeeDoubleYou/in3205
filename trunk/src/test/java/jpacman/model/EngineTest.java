@@ -104,4 +104,82 @@ public class EngineTest extends GameTestCase {
     	theEngine.start();
     	assertTrue(theEngine.inPlayingState());
     }
+    
+    /**
+     * Test Sneak Path: starting-halted-starting
+     */
+    @Test
+    public void testSneakPath1() {
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.quit();
+    	assertFalse(theEngine.inHaltedState());
+    	
+    	//go to playing then halted
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.quit();
+    	assertTrue(theEngine.inHaltedState());
+    	
+    	//now go from halted to starting
+    	theEngine.start();
+    	assertFalse(theEngine.inStartingState());
+    }
+    
+    /**
+     * Test Sneak Path: starting-gameover-playing
+     */
+    @Test
+    public void testSneakPath2() {
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.movePlayer(0, 1); //move player to monster and die
+    	assertFalse(theEngine.inGameOverState());
+    	
+    	//go to playing, kill player then go to playing again
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.movePlayer(0, 1); //move player to monster and die
+    	assertTrue(theEngine.inGameOverState());
+    	theEngine.start();
+    	assertFalse(theEngine.inPlayingState());
+    }
+    
+    /**
+     * Test Sneak Path: starting-playing-starting
+     */
+    @Test
+    public void testSneakPath3() {
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.start();
+    	assertFalse(theEngine.inStartingState());
+    }
+    
+    /**
+     * Test Sneak Path: starting-halted-gameover-halted
+     */
+    @Test
+    public void testSneakPath4() {
+    	assertTrue(theEngine.inStartingState());
+    	theEngine.quit();
+    	assertFalse(theEngine.inHaltedState());
+    	
+    	//go to playing then halted
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.quit();
+    	assertTrue(theEngine.inHaltedState());
+    	
+    	//go to gameover from halted
+    	theEngine.movePlayer(0, 1); //move player to monster and die
+    	assertFalse(theEngine.inGameOverState());
+    	
+    	//go to halted from gameover
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.movePlayer(0, 1); //move player to monster and die
+    	assertTrue(theEngine.inGameOverState());
+    	theEngine.quit();
+    	assertFalse(theEngine.inHaltedState());
+    }
 }
