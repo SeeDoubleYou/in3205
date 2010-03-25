@@ -3,6 +3,7 @@ package jpacman.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -56,6 +57,21 @@ public abstract class MoveTest extends GameTestCase {
         assertTrue(aMove.moveDone());
         assertFalse(aMove.movePossible());
 
+    }
+    
+    /**
+     * Test the undo functionality.
+     */
+    @Test public void testUndo() {
+    	aMove = createMove(getEmptyCell());
+    	MovingGuest mover = aMove.getMovingGuest();
+    	Cell location1 = mover.getLocation();
+    	aMove.apply();
+    	Cell location2 = mover.getLocation();
+    	assertNotSame(location1, location2);
+    	aMove.undo();
+    	Cell location3 = mover.getLocation();
+    	assertEquals(location1, location3);
     }
 
 

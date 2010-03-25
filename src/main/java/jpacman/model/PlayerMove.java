@@ -108,4 +108,16 @@ public class PlayerMove extends Move {
         assert invariant();
     }
 
+    @Override
+    protected void undo() {
+    	assert invariant();
+        assert moveDone();
+        int oldFood = getFoodEaten();
+        super.undo();
+        getPlayer().eat(-1 * foodEaten);
+        Food resetFood = new Food(foodEaten);
+        resetFood.occupy(getFrom());
+        assert getFoodEaten() == oldFood - foodEaten;
+        assert invariant();
+    }
 }

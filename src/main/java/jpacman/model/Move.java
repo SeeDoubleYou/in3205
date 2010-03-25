@@ -21,6 +21,10 @@ public abstract class Move {
      */
     private MovingGuest mover = null;
 
+    /**
+     * The cell the mover comes from.
+     */
+    private Cell from = null;
 
     /**
      * The target cell the mover would like to go to.
@@ -59,6 +63,7 @@ public abstract class Move {
         assert toCell == null
             || fromGuest.getLocation().getBoard() == toCell.getBoard();
         this.mover = fromGuest;
+        this.from = fromGuest.getLocation();
         this.to = toCell;
         assert moveInvariant() : "Move invariant invalid";
     }
@@ -219,5 +224,25 @@ public abstract class Move {
         assert mover != null;
         assert mover.getLocation() != null;
         return to != null && mover.getLocation().equals(to);
+    }
+    
+    protected void undo() {
+    	assert initialized();
+    	assert moveDone();
+    	/*
+    	quit();
+    	if(playerDies() && !getPlayer().living())
+        {
+    		getPlayer().revive();
+    	}
+    	*/
+    	mover.deoccupy();
+        mover.occupy(from);
+        assert to.getInhabitant() == null : "old cell should be freed";
+        assert initialized();
+    }
+    
+    protected Cell getFrom() {
+    	return from;
     }
 }

@@ -2,6 +2,7 @@ package jpacman.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import jpacman.TestUtils;
 
@@ -135,6 +136,33 @@ public class PlayerMoveTest extends MoveTest {
     	assertTrue(getTheGame().playerWon());
     	assertFalse(getTheGame().playerDied());
     	assertTrue(move.invariant());
+    }
+    
+    /**
+     * test undo move when food was eaten
+     */
+    @Test public void testFoodUndo() {
+    	PlayerMove move = createMove(getFoodCell());
+    	int food1 = getThePlayer().getPointsEaten();
+    	assertTrue(move.movePossible());
+    	move.apply();
+    	int food2 = food1 + 1;
+    	assertEquals(food2, getThePlayer().getPointsEaten());
+    	move.undo();
+    	assertEquals(food1, getThePlayer().getPointsEaten());
+    }
+    
+    @Test
+    /*
+     * test undo move when monster was met
+     */
+    public void testDieUndo() {
+    	PlayerMove move = createMove(getMonsterCell());
+    	assertFalse(move.movePossible());
+    	assertTrue(move.playerDies());
+    	assertTrue(move.invariant());
+    	move.undo();
+    	assertTrue(getThePlayer().living());
     }
     
     /**
