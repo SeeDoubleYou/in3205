@@ -86,6 +86,14 @@ public class Player extends MovingGuest {
         assert playerInvariant();
         assert !living();
     }
+    
+    protected void revive() {
+        assert playerInvariant();
+        assert !living();
+        alive = true;
+        assert playerInvariant();
+        assert living();
+    }
 
 
     /**
