@@ -2,6 +2,7 @@ package jpacman.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import jpacman.TestUtils;
 
@@ -67,6 +68,24 @@ public class MonsterMoveTest extends MoveTest {
 		MonsterMove monsterMove = createMove(monsterCell);
 		assertFalse(monsterMove.movePossible());
 		assertTrue(monsterMove.invariant());
+	}
+	
+	@Test
+	/**
+	 * Test a move by a monster to an empty cell
+	 * the monster should move to the cell, undo the move
+	 * the monster should have returned to its original cell
+	 */
+	public void testUndoMonsterMove() {
+		Cell emptyCell = getEmptyCell();
+		aMonsterMove = createMove(emptyCell);
+		assertTrue(aMonsterMove.movePossible());
+		Cell original = aMonsterMove.getMonster().getLocation();
+		assertNotSame(original, emptyCell);
+		aMonsterMove.apply();
+		assertEquals(emptyCell, aMonsterMove.getMonster().getLocation());
+		aMonsterMove.undo();
+		assertEquals(original, aMonsterMove.getMonster().getLocation());
 	}
 	
 	@Test

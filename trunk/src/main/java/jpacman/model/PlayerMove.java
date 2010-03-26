@@ -112,12 +112,12 @@ public class PlayerMove extends Move {
     protected void undo() {
     	assert invariant();
         assert moveDone();
-        int oldFood = getFoodEaten();
         super.undo();
-        getPlayer().eat(-1 * foodEaten);
-        Food resetFood = new Food(foodEaten);
-        resetFood.occupy(getFrom());
-        assert getFoodEaten() == oldFood - foodEaten;
+        if (getGuestAtDestination() != null 
+        		&& getGuestAtDestination().guestType() == Guest.FOOD_TYPE) {
+        	Food eaten = (Food) getGuestAtDestination();
+        	getPlayer().eat(-eaten.getPoints());
+        }        
         assert invariant();
     }
 }

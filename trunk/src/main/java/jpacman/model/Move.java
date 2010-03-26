@@ -25,6 +25,11 @@ public abstract class Move {
      * The cell the mover comes from.
      */
     private Cell from = null;
+    
+    /**
+     * The guest who is possibly at the destination.
+     */
+    private Guest toGuest = null;
 
     /**
      * The target cell the mover would like to go to.
@@ -65,6 +70,7 @@ public abstract class Move {
         this.mover = fromGuest;
         this.from = fromGuest.getLocation();
         this.to = toCell;
+        this.toGuest = toCell.getInhabitant();
         assert moveInvariant() : "Move invariant invalid";
     }
 
@@ -216,6 +222,15 @@ public abstract class Move {
     protected MovingGuest getMovingGuest() {
         return mover;
     }
+    
+    /**
+     * Obtain the guest at the destination of the move or null if no such guest.
+     * 
+     * @return The guest at the destination
+     */
+    protected Guest getGuestAtDestination() {
+    	return toGuest;
+    }
 
     /**
      * @return true if the move has already been applied.
@@ -226,15 +241,28 @@ public abstract class Move {
         return to != null && mover.getLocation().equals(to);
     }
     
+    /**
+     * Undo this move.
+     */
     protected void undo() {
     	assert initialized();
     	assert moveDone();
     	mover.deoccupy();
-        mover.occupy(from);
-        assert to.getInhabitant() == null : "old cell should be freed";
+        mover.occupy(from);    
+        if (getGuestAtDestination() != null) {
+        	getGuestAtDestination().occupy(to);
+        }
+        //old cell should revert to original occupant
+        assert mover.getLocation().getX() == from.getX();
+        assert mover.getLocation().getY() == from.getY();
+        assert getGuestAtDestination() == to.getInhabitant(); 
         assert initialized();
     }
     
+    /**
+     * Obtain the originating Cell location.
+     * @return the Cell that is the location we came from during this move
+     */
     protected Cell getFrom() {
     	return from;
     }

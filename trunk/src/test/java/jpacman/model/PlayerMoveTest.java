@@ -151,20 +151,7 @@ public class PlayerMoveTest extends MoveTest {
     	move.undo();
     	assertEquals(food1, getThePlayer().getPointsEaten());
     }
-    
-    @Test
-    /*
-     * test undo move when monster was met
-     */
-    public void testDieUndo() {
-    	PlayerMove move = createMove(getMonsterCell());
-    	assertFalse(move.movePossible());
-    	assertTrue(move.playerDies());
-    	assertTrue(move.invariant());
-    	move.undo();
-    	assertTrue(getThePlayer().living());
-    }
-    
+        
     /**
      * Create a move object that will be tested.
      *  @see jpacman.model.MoveTest#createMove(jpacman.model.Cell)

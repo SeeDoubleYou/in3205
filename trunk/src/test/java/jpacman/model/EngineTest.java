@@ -1,5 +1,6 @@
 package jpacman.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -189,5 +190,123 @@ public class EngineTest extends GameTestCase {
     	theEngine.quit();
     	assertFalse(theEngine.inHaltedState());
     	assertTrue(theEngine.invariant());
+    }
+    
+    /**
+     * Test undo simple player move
+     */
+    @Test
+    public void testUndoPlayerMove() {
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	int x = getThePlayer().getLocation().getX();
+    	int y = getThePlayer().getLocation().getY();
+    	theEngine.movePlayer(1, 1); //move to empty cell next to me
+    	assertEquals(x+1, getThePlayer().getLocation().getX());
+    	assertEquals(y+1, getThePlayer().getLocation().getY());
+    	theEngine.undo(); //undo last move    	
+    	assertEquals(x, getThePlayer().getLocation().getX());
+    	assertEquals(y, getThePlayer().getLocation().getY());
+    	assertTrue(theEngine.inHaltedState());
+    }
+    
+    /**
+     * Test undoing after quitting
+     */
+    @Test
+    public void testUndoAfterQuit() {
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.quit();
+    	assertTrue(theEngine.inHaltedState());
+    	theEngine.undo();
+    	assertTrue(theEngine.inHaltedState());
+    }
+    
+    /**
+     * Test undo after player dies by meeting monster
+     */
+    @Test
+    public void testUndoDieMove() {
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.movePlayer(0,1);
+    	assertFalse(getThePlayer().living());
+    	assertTrue(theEngine.inGameOverState());
+    	assertTrue(getTheGame().playerDied());
+    	theEngine.undo();
+    	assertTrue(getThePlayer().living());
+    	assertFalse(getTheGame().playerDied());
+    	assertTrue(theEngine.inHaltedState());
+    	assertTrue(theEngine.invariant());
+    }   
+    
+    /**
+     * Test undo after monster kills player
+     */
+    @Test
+    public void testUndoAfterMonsterDie() {
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.moveMonster(getTheMonster(), 0, -1);
+    	assertFalse(getThePlayer().living());
+    	assertTrue(theEngine.inGameOverState());
+    	assertTrue(getTheGame().playerDied());
+    	theEngine.undo();
+    	assertTrue(theEngine.inHaltedState());
+    	assertFalse(getTheGame().playerDied());
+    	assertTrue(getThePlayer().living());
+    	assertTrue(theEngine.invariant());
+    }
+    
+    /**
+     * Test undo when no moves have been done
+     */
+    @Test
+    public void testUndoNotAllowed() {
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	theEngine.undo();
+    	assertFalse(theEngine.inHaltedState()); //no moves done yet, so cant undo anything
+    }
+    
+    /**
+     * Test many monster moves undone
+     */
+    @Test
+    public void testUndoManyMonsterMoves() {
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	int x = getThePlayer().getLocation().getX();
+    	int y = getThePlayer().getLocation().getY();
+    	theEngine.movePlayer(1, -1);
+    	assertEquals(x+1, getThePlayer().getLocation().getX());
+    	assertEquals(y-1, getThePlayer().getLocation().getY());
+    	int mx = getTheMonster().getLocation().getX();
+    	int my = getTheMonster().getLocation().getY();
+    	theEngine.moveMonster(getTheMonster(), 1, 0);
+    	theEngine.moveMonster(getTheMonster(), 0, -1);
+    	theEngine.moveMonster(getTheMonster(), -1, 0);
+    	theEngine.undo();
+    	assertTrue(theEngine.inHaltedState());
+    	assertTrue(getThePlayer().living());
+    	assertEquals(x, getThePlayer().getLocation().getX());
+    	assertEquals(y, getThePlayer().getLocation().getY());
+    	assertEquals(mx, getTheMonster().getLocation().getX());
+    	assertEquals(my, getTheMonster().getLocation().getY());
+    }
+    
+    /**
+     * Test undo score
+     */
+    @Test
+    public void testUndoScoring() {
+    	theEngine.start();
+    	assertTrue(theEngine.inPlayingState());
+    	int score = getThePlayer().getPointsEaten();
+    	theEngine.movePlayer(-1, 0); //eat some food
+    	assertEquals(score+1, getThePlayer().getPointsEaten());
+    	theEngine.undo();
+    	assertEquals(score, getThePlayer().getPointsEaten());
     }
 }
