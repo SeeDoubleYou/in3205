@@ -106,7 +106,7 @@ public class Engine extends Observable {
     public Engine() {
         theGame = new Game();
     }
-
+    
     /**
      * Start a new engine with a specific game.
      *
@@ -174,10 +174,26 @@ public class Engine extends Observable {
      */
     public synchronized void undo() {
     	assert invariant();
-    	if(inDiedState()) {
-    		theGame.getPlayer().revive();
+    	if (inPlayingState() || inHaltedState()) { //just undo all moves until undoing a player move
+    		if (theGame.hasMoves() && !inHaltedState()) {
+    			halted = true;
+    		}
+    		
+    		while (theGame.hasMoves()) {
+    			Move m = theGame.getMostRecentMove();
+    			m.undo();
+    			
+    			if (m instanceof PlayerMove) {
+    				break;
+    			}
+    		}
     	}
-    	quit();
+    	else if (inDiedState()) { //revive the player
+    		theGame.revive();
+    		halted = true;
+    	}
+    	notifyViewers();
+    	assert invariant();    	
     }
 
     /**
@@ -209,6 +225,7 @@ public class Engine extends Observable {
      */
     public synchronized void moveMonster(Monster monster, int dx, int dy) {
     	assert invariant();
+    	assert monster != null;
     	if (inPlayingState()) {
     		theGame.moveMonster(monster, dx, dy);
     		notifyViewers();

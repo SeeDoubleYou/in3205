@@ -87,7 +87,10 @@ public class Player extends MovingGuest {
         assert !living();
     }
     
-    protected void revive() {
+    /**
+     * The player has been revived by an undo.
+     */
+    protected void live() {
         assert playerInvariant();
         assert !living();
         alive = true;

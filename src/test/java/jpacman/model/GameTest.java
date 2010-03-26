@@ -1,8 +1,10 @@
 package jpacman.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 
+import java.util.Stack;
 import java.util.Vector;
 
 import org.junit.Test;
@@ -72,5 +74,21 @@ public class GameTest extends GameTestCase {
         assertEquals(0, getTheGame().getPlayerLastDx());
         assertEquals(-1, getTheGame().getPlayerLastDy());
     }
-
+    
+    /**
+     * Test if the underlying stack in game that tracks moves is pushing
+     * and popping moves in the correct order
+     */
+    @Test
+    public void testUndoStack() {
+    	PlayerMove move1 = new PlayerMove(getThePlayer(), getFoodCell());
+    	PlayerMove move2 = new PlayerMove(getThePlayer(), getEmptyCell());
+    	getTheGame().persistMove(move1);
+    	getTheGame().persistMove(move2);
+    	PlayerMove performed = (PlayerMove) getTheGame().getMostRecentMove();
+    	assertEquals(performed, move2);
+    	assertNotSame(performed, move1);
+    	performed = (PlayerMove) getTheGame().getMostRecentMove();
+    	assertEquals(performed, move1);
+    }
 }

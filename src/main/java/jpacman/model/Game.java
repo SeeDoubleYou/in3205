@@ -1,5 +1,6 @@
 package jpacman.model;
 
+import java.util.Stack;
 import java.util.Vector;
 
 /**
@@ -14,6 +15,11 @@ import java.util.Vector;
  */
 public class Game {
 
+	/**
+	 * The stack of all moves done in the game.
+	 */
+	private Stack<Move> theStack = null;
+	
     /**
      * The board containing all guests.
      */
@@ -59,6 +65,7 @@ public class Game {
      *         (in which case default values are used).
      */
     void initialize() throws GameLoadException {
+    	theStack = new Stack<Move>();
         if (theMap == null) {
             try {
                 theMap = (new GameLoader()).obtainMap();
@@ -92,7 +99,8 @@ public class Game {
      */
     public boolean initialized() {
         return theBoard != null 
-            && thePlayer != null 
+            && thePlayer != null
+            && theStack != null
             && monsters != null
             && totalPoints >= 0;
     }
@@ -117,8 +125,51 @@ public class Game {
         return initialized() && consistent();
     }
 
-
-
+    /**
+     * Every move made in the game should be pushed onto the stack.
+     * @param m The move to save
+     */
+    protected void persistMove(Move m) {
+    	assert invariant();
+    	assert m != null;
+    	theStack.push(m);
+    	assert invariant();
+    }
+    
+    /**
+     * The most recent move applied can be requested via this method.
+     * pre-condition: we have at least one recent move saved
+     * @return the most recent move applied
+     */
+    protected Move getMostRecentMove() {
+    	assert invariant();
+    	assert !theStack.isEmpty();
+    	return theStack.pop();
+    }
+    
+    /**
+     * Have there been any moves done by either a monster or the player? 
+     * @return true iff moves have been performed by some MovingGuest
+     */
+    protected boolean hasMoves() {
+    	assert invariant();
+    	return !theStack.isEmpty();
+    }
+    
+    /**
+     * We want to revive the player from his death.
+     */
+    protected void revive() {
+    	assert invariant();
+    	assert playerDied();
+    	assert gameOver();
+    	assert !playerWon();
+    	getPlayer().live();
+    	assert invariant();
+    	assert !playerDied();
+    	assert !gameOver();
+    }
+    
     /**
      * Get the board of this game, which can be null if
      * the game has not been initialized.
@@ -296,6 +347,7 @@ public class Game {
     void moveMonster(Monster m, int dx, int dy) {
     	assert invariant();
     	assert !gameOver();
+    	assert m != null;
     	Cell targetCell = 
     		m.getLocation().cellAtOffset(dx, dy);
     	MonsterMove move = new MonsterMove(m, targetCell);
@@ -313,6 +365,7 @@ public class Game {
         assert !gameOver();
         if (move.movePossible()) {
             move.apply();
+            persistMove(move);
             assert move.moveDone();
             assert !playerDied() : "move possible => not killed";
         } else {

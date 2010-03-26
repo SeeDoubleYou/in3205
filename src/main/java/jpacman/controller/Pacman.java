@@ -105,6 +105,17 @@ public class Pacman {
     }
 
     /**
+     * Undo the last player moves and monster moves leading up to that move.
+     */
+    public void undo() {
+    	assert invariant();
+    	monsterTicker.stop();
+    	theEngine.undo();
+    	theAnimator.stop();
+    	assert invariant();
+    }
+    
+    /**
      * Halt the pacman game.
      */
     public void quit() {
