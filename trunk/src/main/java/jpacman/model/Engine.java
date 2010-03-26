@@ -167,6 +167,19 @@ public class Engine extends Observable {
         notifyViewers();
         assert invariant() : "Invariant invalid after updating the viewers";
     }
+    
+    /**
+     * Undo the last step the player made. If the player died, revive.
+     * Game enters halted state
+     */
+    public synchronized void undo() {
+    	assert invariant();
+    	if(inDiedState()) {
+    		assert died;
+    		theGame.getPlayer().revive();
+    	}
+    	quit();
+    }
 
     /**
      * Try to move the player along a given offset.

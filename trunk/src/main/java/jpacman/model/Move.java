@@ -229,13 +229,6 @@ public abstract class Move {
     protected void undo() {
     	assert initialized();
     	assert moveDone();
-    	/*
-    	quit();
-    	if(playerDies() && !getPlayer().living())
-        {
-    		getPlayer().revive();
-    	}
-    	*/
     	mover.deoccupy();
         mover.occupy(from);
         assert to.getInhabitant() == null : "old cell should be freed";
