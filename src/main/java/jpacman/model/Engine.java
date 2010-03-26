@@ -175,7 +175,6 @@ public class Engine extends Observable {
     public synchronized void undo() {
     	assert invariant();
     	if(inDiedState()) {
-    		assert died;
     		theGame.getPlayer().revive();
     	}
     	quit();
